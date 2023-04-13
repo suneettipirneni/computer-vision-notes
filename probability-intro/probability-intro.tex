@@ -158,10 +158,10 @@ For a more concise notation for conditional probabilities $y=y^*$ is replaced wi
 \end{align}
 
 Furthermore \ref{eq:simple-cond} can be rearragned to provide additional equivalences:
-\begin{align}
+\begin{align}\label{eq:cond-x}
 	Pr\left( x,y \right) = Pr\left( x|y \right) Pr(y)
 \end{align}
-\begin{align}
+\begin{align}\label{eq:cond-y}
 	Pr(x,y)=Pr\left( y|x \right) Pr(x)
 \end{align}
 
@@ -174,5 +174,69 @@ When there's more than two variables the process is applied repeatedly
 \end{align*}
 
 \section{Bayes' Rule}
+
+Using equations \ref{eq:cond-x} and \ref{eq:cond-y} we can create a new relation.
+\begin{align}\label{eq:cond-related}
+	Pr\left( y|x \right) Pr(x)	= Pr\left( x|y \right) Pr(y)
+\end{align}
+
+\ref{eq:cond-related} can be rearranged to
+\begin{align}\label{eq:bayes}
+	Pr\left( y|x \right) = \frac{Pr\left( x|y \right) Pr\left( y \right) }{Pr\left( x \right) }
+\end{align}
+
+Each part of \ref{eq:bayes} has a label
+
+\begin{itemize}
+	\item $Pr\left( y|x \right)$ is the posterior which reprents already-known information about $y$ given $x$.
+	\item $Pr\left( y \right) $ is the prior, it is what is known about $y$ before $x$ is considered.
+	\item $Pr\left( x|y \right) $ is the likelihood.
+	\item $Pr\left( x \right) $ is the evidence.
+\end{itemize}
+
+\section{Independence}
+
+If the following is true
+\begin{align*}
+	Pr\left( x|y \right) = Pr(x) \\
+	Pr\left( y|x \right) = Pr(y) 
+\end{align*}
+
+Then both of the conditional probabilities shown above are known as "independent". $x$ has no effect on $y$ or vice-versa.
+
+If we use this equivalence to with equation \ref{eq:cond-x} we can get \ref{eq:cond-indep}
+\begin{align} \label{eq:cond-indep}
+	Pr\left( x,y \right) = Pr\left( x|y \right) Pr\left( y \right) = Pr\left( x \right) Pr\left( y \right) 
+\end{align}
+
+\section{Expectation}
+
+An expectation function is a function that will give you the average value of an outcome pertaining to a variable. 
+
+Formally, an expectation function $f[\cdot]$ is a function that takes all possible values of a variable $x$, $x^*$ and multiplies each of those values against their conditional probability $Pr\left( x=x^* \right) $
+
+They are defined for the continuous and discrete case in \ref{eq:expectation}
+
+\begin{align}\label{eq:expectation}	
+	E[f[x]]=\sum_{x} f[x]Pr(x) \\
+	\notag E[f[x]]=\int f[x]Pr(x)dx
+\end{align}
+
+As an example we can consider a 6-sided die, where our $x$ variable is the outcome of rolling the die. We can calculate the expectation of this by using the expectation function \ref{eq:expectation}.
+
+\begin{align*}
+	E[f[x]]=\left( 1*\frac{1}{6} \right) + \left( 2*\frac{1}{6} \right) + \left( 3*\frac{1}{6} \right) + \left( 4*\frac{1}{6} \right) + \left( 5*\frac{1}{6} \right) + \left( 6*\frac{1}{6} \right) \\
+	= 3.5
+\end{align*}
+
+Therefore, the expected value for rolling a 6-sided is $3.5$. You may notice that in the case of $f[x]$ it's actually the same value as the mean of all possible values of $x$:
+
+\begin{align*}
+	\mu_x = \frac{\sum_{1}^{n}x}{n} \\
+	\mu_x = \frac{1 + 2 + 3 + 4 + 5 + 5}{6} \\
+	\mu_x = 3.5
+\end{align*}
+
+As a result we can assume the expectation function $f[x]$ is the same as calculating the mean $\mu_x$
 
 \end{document}
