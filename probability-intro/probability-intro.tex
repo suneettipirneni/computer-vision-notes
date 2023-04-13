@@ -1,7 +1,7 @@
 \documentclass{article}
 \usepackage{amsmath}
 \usepackage{mathptmx}
-
+\usepackage{parskip}
 
 \title{Introduction to probability}
 \date{2023, April}
@@ -31,5 +31,148 @@ Joint probability refers to the combined probility of two or more random variabl
 \end{equation}
 
 Where $x$ and $y$ are two different random variables.
+
+\section{Marginalization}
+
+Given a joint distribution, you can recover the constituents of a joint distribution using marginalization. 
+
+If both random variables in the joint distrution are continuous, then you use integration to recover the distribution of a single variable:
+\begin{align*}
+	Pr\left( x \right)=\int Pr\left( x,y \right)dy \\
+	Pr\left( y \right) = \int Pr\left( x,y \right)dx
+\end{align*}
+
+With discrete random variables we use summation instead:
+\begin{align*}
+	Pr\left( x \right) = \sum_{y} Pr\left( x,y \right) \\
+	Pr\left( y \right) = \sum_{x} Pr\left( x,y \right) 
+\end{align*}
+\noindent
+To be more specific, when $\sum_{x}$ is used it means to take sum all possible probabilities of $x$ where $x$ is held at a specific value while all other permutations for all variables are used.
+
+For example consider the following joint distribution between the discrete variables $x$ and $y$:
+
+\begin{table}[htpb]
+	\centering
+	\caption{Joint probabilities between $x$ and $y$}
+	\label{tab:joint}
+	\begin{tabular}{ccc}
+	 	 & $y=0$  & $y=1$ \\
+		\hline
+		$x=0$ \vline & 0.2 & 0.1 \\
+		$x=1$ \vline & 0.1 & 0.6 \\
+	\end{tabular}
+\end{table}
+
+In this scenario, to recover the marginal distribution for $x$ we need to calculate $\sum_{y}$:
+\begin{align*}
+	Pr\left( x=0 \right) =  \sum_{y}=Pr\left( x=0, y=0 \right) + Pr\left( x=0,y=1 \right) \\
+	= 0.2 + 0.1 \\
+	= 0.3
+\end{align*}
+\begin{align*}
+	Pr\left( x=1 \right) = \sum_{y}=Pr\left( x=1,y=1 \right) + Pr\left( x=1,y=0 \right) \\
+	= 0.1 + 0.6 \\
+	= 0.7
+\end{align*}
+
+This yields the probability distribution for $x$:
+
+\begin{table}[htpb]
+	\centering
+	\caption{Recovered probability of $x$}
+	\label{tab:x-recover}
+	\begin{tabular}{cc}
+		$x=0$  & $x=1$ \\
+		\hline
+		0.3 & 0.7
+
+	\end{tabular}
+\end{table}
+
+The recovered distributions are called the "marginal distributions"
+
+A more complex example of recovering $Pr\left( x,y \right)$ where $z$ is continuous and $w$ is discrete is shown below:
+\begin{align*}
+	Pr\left( x,y \right) = \sum_{w} \int Pr\left( w,x,y,z \right)dz
+\end{align*}
+
+The first thing done is we integrate the joint distribution with respect to $z$. This yields the marginalized distribution $Pr\left( w,x,y \right)$. Next we sum every possible outcome of $w$, this gives us our result of $Pr\left( x,y \right) $
+
+\section{Conditional Probability}
+
+Conditional probability represents the probability of something happening given a specific condition.
+
+It is represented as the following: $Pr\left( x|y=y^{*} \right) $. Here $y=y^{*}$ means we are pinning $y$ to a specific value $y^{*}$. The $|$ is read as "given". So the equation can be read as "probability of $x$ given $y$ equals $y^{*}$
+
+$Pr\left( x|y=y^* \right) $ is calculated from a joint distribution by holding a variable ($y$ in this case) to a specific value. For example, if we reference table \ref{tab:joint}, we can calculate $Pr\left( x|y=1 \right) $. This yields to the following distribution:
+
+\begin{table}[htpb]
+	\centering
+	\caption{distribution of $x$ given y=0}
+	\label{tab:invalid-x-dist}
+	\begin{tabular}{cc}
+	$x-0$ & $x=1$\\
+	\hline
+	0.1 & 0.2
+	\end{tabular}
+\end{table}
+
+Table \ref{tab:invalid-x-dist}, however, is not a valid distrution because the probabilities do not sum to $1$. As a result, the subset of probabilities needs to be normalized to be a valid distribution.
+
+Note: a comma is used instead of $|$ for situations above as it is not the true condional probability, the comma reprents a slice of a distribution that may not be a proper distribution itself.
+
+\begin{align} \label{eq:cond-prob}
+	Pr\left( x|y=y^* \right) =\frac{Pr(x,y=y^*)}{\int Pr\left( x,y=y^* \right)dx } = \frac{Pr\left( x,y=y^* \right) }{Pr\left( y=y^* \right) }
+\end{align}
+
+Once again using table \ref{tab:joint}, we can use (\ref{eq:cond-prob}) to get the correct distribution of $Pr\left( x|y=1 \right)$.
+
+\begin{align*}
+	Pr\left( x,y=1 \right) = \begin{bmatrix} 0.1 & 0.2 \end{bmatrix}   \\
+	\sum_{x} Pr(x,y=1)dx = 0.3
+\end{align*}
+\begin{align*}
+	Pr\left( x|y=y^* \right) = \frac{\begin{bmatrix} 0.1 & 0.2 \end{bmatrix} }{0.3} \\
+	= \begin{bmatrix} 0.3\overline{3}& 0.6\overline{6} \end{bmatrix}  
+\end{align*}
+
+\begin{table}[htpb]
+	\centering
+	\caption{Correct distribution of $Pr(x|y=1)$}
+	\label{tab:correct-cond-x}
+
+	\begin{tabular}{cc}
+	$x=0$ & $x=1$ \\
+	\hline
+	$0.3\overline{3}$ & $0.6\overline{6}$
+	\end{tabular}
+\end{table}
+
+Table \ref{tab:correct-cond-x} gives the correct probability distribution, we can verify this because all probabilities sum to one as expected.
+
+For a more concise notation for conditional probabilities $y=y^*$ is replaced with just $y$. So instead of $Pr\left( x|y=y^* \right) $, $Pr\left( x|y \right) $ is used instead. Using this equation \ref{eq:cond-prob} can be simplified to \ref{eq:simple-cond}. 
+
+\begin{align} \label{eq:simple-cond}
+	Pr\left( x|y \right) =\frac{Pr\left( x,y \right) }{Pr\left( x \right) }
+\end{align}
+
+Furthermore \ref{eq:simple-cond} can be rearragned to provide additional equivalences:
+\begin{align}
+	Pr\left( x,y \right) = Pr\left( x|y \right) Pr(y)
+\end{align}
+\begin{align}
+	Pr(x,y)=Pr\left( y|x \right) Pr(x)
+\end{align}
+
+When there's more than two variables the process is applied repeatedly
+
+\begin{align*}
+	Pr\left( w,x,y,z \right) = Pr\left( w,x,y|x \right) Pr\left( x \right) \\
+	= Pr\left( w,x|y,z \right) Pr(y|z) Pr(z) \\
+	= Pr\left( w|x,y,z) \right) Pr(x|y,z) Pr\left( z \right) 
+\end{align*}
+
+\section{Bayes' Rule}
 
 \end{document}
