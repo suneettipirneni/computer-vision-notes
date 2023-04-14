@@ -1,0 +1,52 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{mathptmx}
+\usepackage{parskip}
+\usepackage{makecell}
+\usepackage{stix}
+\usepackage{geometry}
+\usepackage{booktabs,tabularx}
+
+\geometry{legalpaper, margin=1in}
+
+\title{Probability Distributions}
+\date{April, 2023}
+\author{Suneet Tipirneni}
+
+\begin{document}
+\maketitle
+
+\section{Common Probability Distributions}
+
+\begin{table}[ht]
+	\centering
+	\caption{Common Probability Distributions}
+	\label{tab:prob-dists}
+	\begin{tabularx}{0.7\textwidth}{| X | X | X |}
+		\hline
+		\textbf{Data Type} & \textbf{Domain} & \textbf{Distribution} \\
+		\hline
+		univariate, discrete, binary & $x \in \{0,1\}$ & bernoilli \\
+		\hline
+		univariate, discrete, multivalued & $x \in \{1,2,\ldots\} $ & categorical \\
+		\hline
+		univariate, continous, unbounded & $x \in \mathbb{R}$ & univariate normal \\
+		\hline
+		univariate, continous, bounded & $x\in [0,1]$ & beta \\
+		\hline
+		multivariate, continous, bounded & $x \in \mathbb{R}^{K}$ & multivariate normal \\
+		\hline
+		multivariate, continous, bounded, sums to one & \makecell[lt]{ $x=[x_1,x_2,\ldots,x_K]^T$ \\ $x_{\mathscr{k}} \in [0,1]$ \\ $\sum_{\mathscr{k}}^{K}x_{\mathscr{k}}=1 $} & Dirichlet \\
+		\hline
+		bivariate, continous, $x_1$ unbounded, $x_2$ bounded below & \makecell[lt]{$x=[x_1,x_2]$ \\  $x_1\in \mathbb{R}$ \\ $x_2 \in \mathbb{R}^{+}$ } & normal-scaled inverse gamma \\
+		\hline
+		vector $x$ and matrix $X$, $x$ unbounded, $X$ square, positive definite & \makecell{$x\in\mathbb{R}^K$ \\ $X \in \mathbb{R}^{K\times K}$ \\ $z^T Xz > 0 \forall z \in \mathbb{R}^K$} & normal inverse Wishart \\
+	\hline
+	\end{tabularx}
+\end{table}
+
+Each probability distribution has an additional feature, uncertainty. Uncertainty is how uncertain we are that a distribution fits the data. This distribution is over the parameters of the model. So for every distribution there is another distribution over the parameters.
+
+
+
+\end{document}
