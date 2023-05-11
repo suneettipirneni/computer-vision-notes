@@ -2,6 +2,7 @@
 \usepackage{amsmath}
 \usepackage{mathptmx}
 \usepackage{parskip}
+\usepackage{hyperref}
 
 \title{Introduction to probability}
 \date{2023, April}
@@ -22,7 +23,7 @@ A random variable is a variable that represents an uncertain result. Some exampl
 
 A random variable can be either continous or discrete. Continous variables are variables that are based on real numbers. On the other hand, a discrete variable is one with a set amount of variants. Regardless of whether a variable is discrete or continuous, each possible outcome probability must sum to $1$.
 
-\section{Join Probability}
+\section{Joint Probability}
 
 Joint probability refers to the combined probility of two or more random variables. These are represented like so in equation \ref{eq:joint}:
 
@@ -37,16 +38,16 @@ Where $x$ and $y$ are two different random variables.
 Given a joint distribution, you can recover the constituents of a joint distribution using marginalization. 
 
 If both random variables in the joint distrution are continuous, then you use integration to recover the distribution of a single variable:
-\begin{align*}
+\begin{align}\label{eq:marginalize-disc}
 	Pr\left( x \right)=\int Pr\left( x,y \right)dy \\
 	Pr\left( y \right) = \int Pr\left( x,y \right)dx
-\end{align*}
+\end{align}
 
 With discrete random variables we use summation instead:
-\begin{align*}
+\begin{align}\label{eq:marginalize-cont}
 	Pr\left( x \right) = \sum_{y} Pr\left( x,y \right) \\
 	Pr\left( y \right) = \sum_{x} Pr\left( x,y \right) 
-\end{align*}
+\end{align}
 \noindent
 To be more specific, when $\sum_{x}$ is used it means to take sum all possible probabilities of $x$ where $x$ is held at a specific value while all other permutations for all variables are used.
 
@@ -238,5 +239,86 @@ Therefore, the expected value for rolling a 6-sided is $3.5$. You may notice tha
 \end{align*}
 
 As a result we can assume the expectation function $f[x]$ is the same as calculating the mean $\mu_x$
+
+\section{Problems}
+
+\begin{enumerate}
+\item Give a real-world example of a joint distribution $Pr(x, y)$ where $x$ is discrete and $y$ is continuous. \\
+
+One real-world example of this could be the probability of inches of rain and the day of the week. Where $x$ is the day of the week and the amount of rain is $y$.
+\\
+\item What remains if I marginalize a joint distribution $Pr(v, w, x, y, z)$ over five variables with respect to variables $w$ and $y$? What remains if I marginalize the resulting distribution with respect to $v$? \\
+
+Marginalizing $Pr(v, w, x, y, z)$ with respect to $w$ and $y$ yields $Pr(v, x, z)$. Marginalizing the resulting distribution would yield $Pr(x, z)$.
+\\
+\item Show that the following relation is true:
+\begin{equation*}
+	Pr\left( w,x,y,z \right) = Pr\left( x,y \right) Pr\left( z|w,x,y \right) Pr\left( w|x,y \right) 
+\end{equation*}
+\\
+We can use the product rule: \ref{eq:cond-x} to show:
+\begin{align*}
+	Pr\left( w,x,y,z \right) = Pr(z|w,x,y)Pr\left( w,x,y \right) 
+\end{align*}
+
+We use the product rule again \ref{eq:cond-y} to expand $Pr(w,x,y)$:
+\begin{align*}
+	 Pr\left( w,x,y \right) = Pr\left( w|x,y \right) Pr\left( x,y \right) 
+\end{align*}
+
+We can now plug this into the first equation to get:
+\begin{align*}
+	Pr\left( w,x,y,z \right) = Pr\left( z|w,x,y \right) Pr\left( w|x,y \right) Pr(x,y)	
+\end{align*}
+
+\item In my pocket there are two coins. Coin 1 is unbiased, so the likelihood $Pr(h = 1|c = 1)$ of getting heads is 0.5 and the likelihood $Pr(h = 0|c = 1)$ of getting tails is also 0.5. Coin 2 is biased, so the likelihood $Pr(h = 1|c = 2)$ of getting heads is 0.8 and the likelihood $Pr(h=0|c=2)$ of getting tails is 0.2. I reach into my pocket and draw one of the coins at random. There is an equal prior probability I might have picked either coin. I flip the coin and observe a head. Use Bayes’ rule to compute the posterior probability that I chose coin 2. \\
+
+Let's first model this problem using \ref{eq:bayes}, we want to know the probability of $c=2$ given that we have gotten heads ($h=1$):
+
+\begin{align*}
+	Pr\left( c=2|h=1 \right) = \frac{Pr\left( h=1|c=2 \right) Pr\left( c=2 \right) }{Pr\left( h=1 \right) }
+\end{align*}
+
+Now we compute each of the terms. To calculate the evidence we are using marginalization \ref{eq:marginalize-cont} to recover the distribution of $h$ from the joint distribution.
+\begin{align*}
+	&\text{Prior}=Pr\left( c=2 \right) = 0.5 \\
+	&\text{Likelihood}=Pr\left( h=1|c=2 \right) = 0.8 \\
+	&\text{Evidence}=Pr\left( h=1 \right) = Pr(h=1|c=1)Pr(c=2) + Pr\left( h=1|c=2 \right) Pr(c=2)\\
+	&= 0.5 \times 0.5 + 0.8 \times 0.5\\
+	&= 0.65
+\end{align*}
+
+
+We can now subsitute the computed terms into the equation to solve:
+\begin{align*}
+	&Pr\left( c=2|h=1 \right) = \frac{0.8 \times 0.5}{0.65} \\
+	&=0.62
+\end{align*}
+
+The probability of coin 2 being chosen when the outcome is heads, is 0.62.
+
+\item If variables $x$ and $y$ are independent and variables $x$ and $z$ are independent, does it follow that variables $y$ and $z$ are independent?
+
+No, if both $y$ and $z$ are independent of $x$, $y$ and $z$ can still be dependent on each other.
+
+\item Use \ref{eq:cond-prob} to show that when $x$ and $y$ are independent, the marginal distribution $Pr(x)$ is the same as the conditional distribution $Pr(x|y=y*)$ for any $y*$. \\
+
+We need to show that:
+\begin{align*}
+	Pr\left( x \right) = Pr\left( x|y=y* \right) 
+\end{align*}
+
+Which is equal to:
+\begin{align*}
+	&Pr\left( x \right) = \frac{Pr\left( x,y=y* \right) }{Pr\left( y=y* \right) }
+\end{align*}
+
+We then use \ref{eq:cond-indep}:
+\begin{align*}
+	&Pr\left( x \right) = \frac{Pr\left( x \right) Pr(y)}{Pr\left( y \right) } \\
+	&Pr\left( x \right) = Pr\left( x \right) 
+\end{align*}
+
+\end{enumerate}
 
 \end{document}
