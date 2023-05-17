@@ -308,7 +308,7 @@ We need to show that:
 	Pr\left( x \right) = Pr\left( x|y=y* \right) 
 \end{align*}
 
-Which is equal to:
+Which is expanded via \ref{eq:cond-prob}:
 \begin{align*}
 	&Pr\left( x \right) = \frac{Pr\left( x,y=y* \right) }{Pr\left( y=y* \right) }
 \end{align*}
@@ -318,6 +318,15 @@ We then use \ref{eq:cond-indep}:
 	&Pr\left( x \right) = \frac{Pr\left( x \right) Pr(y)}{Pr\left( y \right) } \\
 	&Pr\left( x \right) = Pr\left( x \right) 
 \end{align*}
+
+\item The joint probability $Pr(w, x, y, z)$ over four variables factorizes as
+\begin{equation*}
+	Pr\left( w,x,y,z \right) = Pr\left( w \right) Pr\left( z|w \right) Pr\left( y|x, w \right) Pr\left( x \right) 
+\end{equation*}
+
+Demonstrate that $x$ is independent of $w$ by showing that $Pr(x, w)$ = $Pr(x)Pr(w)$. \\
+
+
 
 \end{enumerate}
 

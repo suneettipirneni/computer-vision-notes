@@ -1,0 +1,52 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{mathptmx}
+\usepackage{parskip}
+\usepackage{makecell}
+\usepackage{stix}
+\usepackage{geometry}
+\usepackage{booktabs,tabularx}
+\usepackage{bm}
+
+\geometry{legalpaper, margin=1in}
+
+\title{Probability Distributions}
+\date{April, 2023}
+\author{Suneet Tipirneni}
+
+\begin{document}
+\maketitle
+
+\section{The Covariance Matrix}
+
+In the univariate normal distribution the covariance is the represented as $\sigma^2$, in the case of the multivariate we use $\Sigma$ to represent the covariance matrix.  \par
+
+\begin{equation}\label{eq:norm}
+	Pr\left( x,y \right) = \frac{1}{\left( 2\pi \right)^{\frac{D}{2}}\sqrt{ \mid \Sigma \mid}}\exp\left[ -0.5\left( \pmb{x} - \pmb{\mu} \right)^{T} \pmb{\Sigma}^{-1} \left( \pmb{x} - \pmb{\mu} \right)  \right] 
+\end{equation}
+
+\section{Type of Covariance Matrices}
+
+There are three forms of covariance matrices, spherical, diagonal, and full:
+
+\begin{align}
+	\pmb{\Sigma}_{sphere} = \begin{bmatrix} \sigma^2 & 0 \\ 0 & \sigma^2  \end{bmatrix} &&
+	\pmb{\Sigma}_{diag} = \begin{bmatrix} \sigma_1^2 & 0 \\ 0 & \sigma_2^2 \end{bmatrix} && 
+	\pmb{\Sigma}_{full} = \begin{bmatrix} \sigma_{11}^2 & \sigma_{12}^2 \\ \sigma_{21}^2 & \sigma_{22}^2 \end{bmatrix} 
+\end{align}
+
+Where $D$ is the number of dimensions.
+
+\subsubsection{Spherical and Diagonal independence}
+
+When the convariance matrix is spherical or diagonal both variables are independent. We can prove it for the bivariate diagonal case where $D=2$ by the following equivalence:
+
+\begin{align*}
+	Pr\left( x_1,x_2 \right) &= \frac{1}{2\pi \sqrt{\mid \Sigma  \mid} } \exp\left[ -\frac{1}{2} \begin{pmatrix} x_1 & x_2 \end{pmatrix} \Sigma^{-1} \begin{pmatrix} x_1 \\ x_2  \end{pmatrix}     \right]  \\
+							 &= \frac{1}{2\pi \sigma_1 \sigma_2} \exp\left[ -\frac{1}{2} \begin{pmatrix} x_1 & x_2 \end{pmatrix} \begin{pmatrix} \sigma_1^{-2} & 0 \\ 0 & \sigma_2^{-2} \end{pmatrix} \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}     \right] \\
+						 &= \frac{1}{2\pi \sigma_1 \sigma_2 } \exp\left[ -\frac{x_1^2}{2\sigma_1^2} - \frac{x_2^2}{2\sigma^2_2} \right] \\
+						 &= \frac{1}{\sqrt{2\pi \sigma^2_1}} \exp\left[ -\frac{x_1^2}{2\sigma_1^2}  \right] \frac{1}{\sqrt{2\pi \sigma^2_2}} \exp\left[ -\frac{x_2^2}{2\sigma_2^2}  \right] \\
+						 &= Pr\left( x_1 \right) Pr\left( x_2 \right) 
+\end{align*}
+
+\end{document}
